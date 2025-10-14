@@ -24,12 +24,7 @@ export class BlockchainService {
 
     // Initialize wallet with private key
     this.wallet = new ethers.Wallet(config.PRIVATE_KEY, this.provider);
-    
-    logger.info('Blockchain service initialized', {
-      chainId: config.CHAIN_ID,
-      rpcUrl: config.RPC_URL,
-      walletAddress: this.wallet.address,
-    });
+
   }
 
   /**
@@ -104,11 +99,6 @@ export class BlockchainService {
       
       if (recipientBalance >= minimumBalance) {
         const currentBalanceFormatted = ethers.formatEther(recipientBalance);
-        logger.info('Recipient has sufficient balance', {
-          recipient: recipientAddress,
-          currentBalance: currentBalanceFormatted,
-          threshold: minimumBalanceThreshold,
-        });
         throw new SufficientBalanceError(
           `You have enough sFUEL. Current balance: ${currentBalanceFormatted} FAIR (minimum required: ${minimumBalanceThreshold} FAIR)`,
           currentBalanceFormatted,
@@ -133,12 +123,6 @@ export class BlockchainService {
         throw new BlockchainError('Cannot distribute gas to the same wallet');
       }
 
-      logger.info('Initiating gas distribution', {
-        recipient: recipientAddress,
-        amount: gasAmount,
-        valueInWei: valueInWei.toString(),
-      });
-
       // Prepare transaction
       const transaction = {
         to: recipientAddress,
@@ -155,12 +139,6 @@ export class BlockchainService {
       const tx = await this.wallet.sendTransaction({
         ...transaction,
         gasPrice,
-      });
-
-      logger.info('Transaction sent', {
-        hash: tx.hash,
-        recipient: recipientAddress,
-        amount: gasAmount,
       });
 
       // Wait for confirmation

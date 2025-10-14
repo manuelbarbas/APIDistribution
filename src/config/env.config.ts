@@ -20,7 +20,7 @@ const envSchema = z.object({
   
   // Gas Distribution Configuration
   GAS_AMOUNT: z.string().default('0.1'), // Amount in native token
-  MINIMUM_BALANCE_THRESHOLD: z.string().default('0.005'), // Minimum balance to skip distribution
+  MINIMUM_BALANCE_THRESHOLD: z.string().default('0.1'), // Minimum balance to skip distribution
   MAX_REQUESTS_PER_MINUTE: z.string().default('10').transform(Number),
   MAX_REQUESTS_PER_DAY: z.string().default('100').transform(Number),
   
