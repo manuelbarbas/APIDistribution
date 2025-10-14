@@ -18,9 +18,10 @@ export const createApp = (): Application => {
   
   // CORS configuration
   app.use(cors({
-    origin: config.NODE_ENV === 'production' ? false : '*',
+    origin: config.NODE_ENV === 'production' ? true : '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key'],
+    credentials: true,
   }));
 
   // Body parsing middleware
